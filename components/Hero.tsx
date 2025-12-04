@@ -22,7 +22,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black/20 z-0"></div>
       
       {/* コンテンツ */}
-      <div className="relative z-10 text-white px-4 w-full mx-auto mt-16 flex flex-col items-center">
+      <div className="relative z-20 text-white px-4 w-full mx-auto mt-16 flex flex-col items-center">
         <div className="font-bold tracking-wider uppercase leading-none text-center w-full" style={{ fontFamily: 'DIN, DIN Alternate, Arial, sans-serif', fontSize: 'clamp(3rem, 12vw, 20rem)' }}>
           BUILT
         </div>

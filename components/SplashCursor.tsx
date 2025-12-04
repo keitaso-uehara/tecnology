@@ -544,16 +544,17 @@ function SplashCursor({
     let divergence: any;
     let curl: any;
     let pressure: any;
-    let copyProgram: any;
-    let clearProgram: any;
-    let splatProgram: any;
-    let advectionProgram: any;
-    let divergenceProgram: any;
-    let curlProgram: any;
-    let vorticityProgram: any;
-    let pressureProgram: any;
-    let gradienSubtractProgram: any;
-    let displayMaterial: any;
+
+    const copyProgram = new Program(baseVertexShader, copyShader);
+    const clearProgram = new Program(baseVertexShader, clearShader);
+    const splatProgram = new Program(baseVertexShader, splatShader);
+    const advectionProgram = new Program(baseVertexShader, advectionShader);
+    const divergenceProgram = new Program(baseVertexShader, divergenceShader);
+    const curlProgram = new Program(baseVertexShader, curlShader);
+    const vorticityProgram = new Program(baseVertexShader, vorticityShader);
+    const pressureProgram = new Program(baseVertexShader, pressureShader);
+    const gradienSubtractProgram = new Program(baseVertexShader, gradienSubtractShader);
+    const displayMaterial = new Material(baseVertexShader, displayShaderSource);
 
     function initFramebuffers() {
       let simRes = getResolution(config.SIM_RESOLUTION);
@@ -579,17 +580,6 @@ function SplashCursor({
       divergence = createFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
       curl = createFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
       pressure = createDoubleFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
-
-      copyProgram = new Program(baseVertexShader, copyShader);
-      clearProgram = new Program(baseVertexShader, clearShader);
-      splatProgram = new Program(baseVertexShader, splatShader);
-      advectionProgram = new Program(baseVertexShader, advectionShader);
-      divergenceProgram = new Program(baseVertexShader, divergenceShader);
-      curlProgram = new Program(baseVertexShader, curlShader);
-      vorticityProgram = new Program(baseVertexShader, vorticityShader);
-      pressureProgram = new Program(baseVertexShader, pressureShader);
-      gradienSubtractProgram = new Program(baseVertexShader, gradienSubtractShader);
-      displayMaterial = new Material(baseVertexShader, displayShaderSource);
     }
 
     function createFBO(w: any, h: any, internalFormat: any, format: any, type: any, param: any) {
@@ -678,8 +668,8 @@ function SplashCursor({
       displayMaterial.setKeywords(displayKeywords);
     }
 
-    updateKeywords();
     initFramebuffers();
+    updateKeywords();
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
 
@@ -1065,7 +1055,7 @@ function SplashCursor({
         position: 'fixed',
         top: 0,
         left: 0,
-        zIndex: 50,
+        zIndex: 8,
         pointerEvents: 'none',
         width: '100%',
         height: '100%'
