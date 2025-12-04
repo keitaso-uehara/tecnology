@@ -70,34 +70,34 @@ function SplashCursor({
         antialias: false,
         preserveDrawingBuffer: false
       };
-      let gl = canvas.getContext('webgl2', params);
+      let gl = canvas.getContext('webgl2', params) as WebGL2RenderingContext | null;
       const isWebGL2 = !!gl;
-      if (!isWebGL2) gl = canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params);
+      if (!isWebGL2) gl = (canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params)) as WebGLRenderingContext | null;
 
       let halfFloat: any;
       let supportLinearFiltering: any;
       if (isWebGL2) {
-        gl!.getExtension('EXT_color_buffer_float');
-        supportLinearFiltering = gl!.getExtension('OES_texture_float_linear');
+        (gl as WebGL2RenderingContext).getExtension('EXT_color_buffer_float');
+        supportLinearFiltering = (gl as WebGL2RenderingContext).getExtension('OES_texture_float_linear');
       } else {
-        halfFloat = gl!.getExtension('OES_texture_half_float');
-        supportLinearFiltering = gl!.getExtension('OES_texture_half_float_linear');
+        halfFloat = (gl as WebGLRenderingContext).getExtension('OES_texture_half_float');
+        supportLinearFiltering = (gl as WebGLRenderingContext).getExtension('OES_texture_half_float_linear');
       }
       gl!.clearColor(0.0, 0.0, 0.0, 1.0);
 
-      const halfFloatTexType = isWebGL2 ? gl!.HALF_FLOAT : halfFloat && halfFloat.HALF_FLOAT_OES;
+      const halfFloatTexType = isWebGL2 ? (gl as WebGL2RenderingContext).HALF_FLOAT : halfFloat && halfFloat.HALF_FLOAT_OES;
       let formatRGBA: any;
       let formatRG: any;
       let formatR: any;
 
       if (isWebGL2) {
-        formatRGBA = getSupportedFormat(gl!, gl!.RGBA16F, gl!.RGBA, halfFloatTexType);
-        formatRG = getSupportedFormat(gl!, gl!.RG16F, gl!.RG, halfFloatTexType);
-        formatR = getSupportedFormat(gl!, gl!.R16F, gl!.RED, halfFloatTexType);
+        formatRGBA = getSupportedFormat(gl!, (gl as WebGL2RenderingContext).RGBA16F, (gl as WebGL2RenderingContext).RGBA, halfFloatTexType);
+        formatRG = getSupportedFormat(gl!, (gl as WebGL2RenderingContext).RG16F, (gl as WebGL2RenderingContext).RG, halfFloatTexType);
+        formatR = getSupportedFormat(gl!, (gl as WebGL2RenderingContext).R16F, (gl as WebGL2RenderingContext).RED, halfFloatTexType);
       } else {
-        formatRGBA = getSupportedFormat(gl!, gl!.RGBA, gl!.RGBA, halfFloatTexType);
-        formatRG = getSupportedFormat(gl!, gl!.RGBA, gl!.RGBA, halfFloatTexType);
-        formatR = getSupportedFormat(gl!, gl!.RGBA, gl!.RGBA, halfFloatTexType);
+        formatRGBA = getSupportedFormat(gl!, (gl as WebGLRenderingContext).RGBA, (gl as WebGLRenderingContext).RGBA, halfFloatTexType);
+        formatRG = getSupportedFormat(gl!, (gl as WebGLRenderingContext).RGBA, (gl as WebGLRenderingContext).RGBA, halfFloatTexType);
+        formatR = getSupportedFormat(gl!, (gl as WebGLRenderingContext).RGBA, (gl as WebGLRenderingContext).RGBA, halfFloatTexType);
       }
 
       return {
