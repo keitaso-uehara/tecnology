@@ -880,10 +880,12 @@ function SplashCursor({
     }
 
     function generateColor() {
-      let c = HSVtoRGB(Math.random(), 1.0, 1.0);
-      c.r *= 0.15;
-      c.g *= 0.15;
-      c.b *= 0.15;
+      // 色相を寒色系（青〜紫: 0.5〜0.8）に調整
+      let c = HSVtoRGB(0.5 + Math.random() * 0.3, 1.0, 1.0);
+      // 強さを上げる (0.15 -> 0.5)
+      c.r *= 0.5;
+      c.g *= 0.5;
+      c.b *= 0.5;
       return c;
     }
 
