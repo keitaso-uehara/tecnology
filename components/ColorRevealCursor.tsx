@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 export default function ColorRevealCursor() {
   const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
-  const radius = 300; // カーソル周辺のカラー表示半径（px）
+  const radius = 500; // カーソル周辺のカラー表示半径（px）
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -18,8 +18,10 @@ export default function ColorRevealCursor() {
     <div
       className="absolute inset-0 pointer-events-none z-[5]"
       style={{
-        maskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
-        WebkitMaskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
+        // グラデーションの分岐点を調整してぼかしを強くする
+        // black 40% -> transparent 100% のようにすると、中心40%は完全表示、そこから徐々に透明になる
+        maskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black 20%, transparent 100%)`,
+        WebkitMaskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black 20%, transparent 100%)`,
       }}
     >
       <div 

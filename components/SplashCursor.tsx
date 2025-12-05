@@ -884,7 +884,7 @@ function SplashCursor({
       let c = HSVtoRGB(0.5 + Math.random() * 0.3, 1.0, 1.0);
       // 強さを上げる (0.15 -> 0.5)
       c.r *= 0.5;
-      c.g *= 0.5;
+      c.g *= 0.9;
       c.b *= 0.5;
       return c;
     }
