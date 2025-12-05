@@ -2,54 +2,54 @@
 import { useEffect, useState } from 'react';
 
 export default function ColorRevealCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
-  const [isActive, setIsActive] = useState(false);
-  const radius = 200; // カーソル周辺のカラー表示半径（px）
+	const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
+	const [isActive, setIsActive] = useState(false);
+	const radius = 300; // カーソル周辺のカラー表示半径（px）
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+	useEffect(() => {
+		let timeoutId: NodeJS.Timeout;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      setIsActive(true);
+		const handleMouseMove = (e: MouseEvent) => {
+			setMousePosition({ x: e.clientX, y: e.clientY });
+			setIsActive(true);
 
-      // 以前のタイマーをクリア
-      if (timeoutId) clearTimeout(timeoutId);
+			// 以前のタイマーをクリア
+			if (timeoutId) clearTimeout(timeoutId);
 
-      // マウスが止まってから0.2秒後に非表示にする
-      timeoutId = setTimeout(() => {
-        setIsActive(false);
-      }, 200);
-    };
+			// マウスが止まってから0.2秒後に非表示にする
+			timeoutId = setTimeout(() => {
+				setIsActive(false);
+			}, 100);
+		};
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, []);
+		window.addEventListener('mousemove', handleMouseMove);
+		return () => {
+			window.removeEventListener('mousemove', handleMouseMove);
+			if (timeoutId) clearTimeout(timeoutId);
+		};
+	}, []);
 
-  return (
-    <div
-      className="absolute inset-0 pointer-events-none z-[5] transition-opacity duration-500 ease-out"
-      style={{
-        opacity: isActive ? 1 : 0,
-        // グラデーションの分岐点を調整してぼかしを強くする
-        // black 0% -> transparent 80% のようにすると、中心からすぐに徐々に透明になり、より強いぼかしになる
-        maskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 80%)`,
-        WebkitMaskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 80%)`,
-      }}
-    >
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/city.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          // 元の画像より明るく、コントラストを強くする
-          filter: 'brightness(1.3) contrast(1.1)',
-        }}
-      />
-    </div>
-  );
+	return (
+		<div
+			className="absolute inset-0 pointer-events-none z-[5] transition-opacity duration-500 ease-out"
+			style={{
+				opacity: isActive ? 1 : 0,
+				// グラデーションの分岐点を調整してぼかしを強くする
+				// black 0% -> transparent 80% のようにすると、中心からすぐに徐々に透明になり、より強いぼかしになる
+				maskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 80%)`,
+				WebkitMaskImage: `radial-gradient(circle ${radius}px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 80%)`,
+			}}
+		>
+			<div
+				className="absolute inset-0"
+				style={{
+					backgroundImage: "url('/city.png')",
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					// 元の画像より明るく、コントラストを強くする
+					filter: 'brightness(1.5) contrast(3.0)',
+				}}
+			/>
+		</div>
+	);
 }
