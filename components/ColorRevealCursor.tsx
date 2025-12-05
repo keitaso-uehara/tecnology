@@ -16,10 +16,10 @@ export default function ColorRevealCursor() {
       // 以前のタイマーをクリア
       if (timeoutId) clearTimeout(timeoutId);
 
-      // マウスが止まってから0.5秒後に非表示にする
+      // マウスが止まってから0.2秒後に非表示にする
       timeoutId = setTimeout(() => {
         setIsActive(false);
-      }, 500);
+      }, 200);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
