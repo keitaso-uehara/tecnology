@@ -868,7 +868,7 @@ function SplashCursor({
     }
 
     function correctDeltaX(delta: any) {
-      let aspectRatio = canvas.width / canvas.height;
+      let aspectRatio = canvas!.width / canvas!.height;
       if (aspectRatio < 1) delta *= aspectRatio;
       return delta;
     }
